@@ -1,6 +1,8 @@
 <template>
   <div>
-hello world
+    <ul>
+      <li v-for="(event, index) in events" :key="index">{{event.summary}}</li>
+    </ul>
   </div>
 </template>
 
@@ -8,9 +10,13 @@ hello world
   export default {
     data() {
       return {
-        events: {}
       }
     },
+    async asyncData( {$axios} ){
+      const events = await $axios.$get('/.netlify/functions/getEvents')
+      return {events}
+    }
+    
   }
 </script>
 
