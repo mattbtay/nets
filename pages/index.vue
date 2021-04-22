@@ -13,7 +13,12 @@
       }
     },
     async asyncData( {$axios} ){
-      const events = await $axios.$get('/.netlify/functions/getEvents')
+      const events = await $axios.$get('/.netlify/functions/getEvents', {
+				  headers: {
+					   "Access-Control-Allow-Origin": "*",
+					   'Access-Control-Allow-Methods': 'POST', 
+				  }
+			  })
       return {events}
     }
     
