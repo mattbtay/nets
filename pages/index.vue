@@ -13,6 +13,7 @@
       }
     },
     async asyncData( {$axios} ){
+      try{
       const events = await $axios.$get('/api/getEvents/', {
 				  headers: {
 					   "Access-Control-Allow-Origin": "*",
@@ -20,6 +21,9 @@
 				  }
 			  })
       return {events}
+    } catch(error){
+      console.log(error)
+    }
     }
     
   }
