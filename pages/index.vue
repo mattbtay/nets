@@ -16,7 +16,7 @@
       const events = await $axios.$get('/api/getEvents', {
 				  headers: {
 					   "Access-Control-Allow-Origin": "*",
-					   'Access-Control-Allow-Methods': 'POST', 
+					   'Access-Control-Allow-Methods': 'GET', 
 				  }
 			  })
       return {events}
