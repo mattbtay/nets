@@ -25,7 +25,7 @@ const handler = async event => {
         auth: oAuth2Client,
         calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com"
       },
-      function(error, response) {
+      (error, response) => {
         if (error) {
           console.log(error);
           return;
