@@ -39,9 +39,7 @@ export default {
   ],
 
   axios: {
-    baseURL: "http://localhost:8888",
-    proxy: true,
-    debug: true
+    proxy: true
   },
   proxy: {
     "/api/": "http://localhost:8888"
