@@ -41,9 +41,10 @@ export default {
   axios: {
     baseURL: "http://localhost:8888",
     proxy: true,
+    debug: true
   },
   proxy: {
-    '/api/': 'http://localhost:8888'
+    "/api/": "http://localhost:8888"
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}
