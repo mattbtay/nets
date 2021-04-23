@@ -30,7 +30,7 @@ const handler = async event => {
           console.log(error);
           return;
         }
-        events = response.data.items;
+        const events = response.data.items;
       }
     );
 
