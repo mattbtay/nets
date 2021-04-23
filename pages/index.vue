@@ -15,6 +15,7 @@ import axios from 'axios'
       }
     },
     mounted (){
+      try{
       axios.get('/api/getEvents', {
 				  headers: {
 					   "Access-Control-Allow-Origin": "*",
@@ -23,7 +24,9 @@ import axios from 'axios'
 			  }).then(res => {
           this.events = res.data
         })
-    
+      } catch(error){
+        if(error) console.log(error)
+      } 
   }}
 </script>
 
