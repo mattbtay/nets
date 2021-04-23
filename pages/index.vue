@@ -15,7 +15,7 @@ import axios from 'axios'
       }
     },
     mounted (){
-      axios.get('/api/getEvents/', {
+      axios.get('/api/getEvents', {
 				  headers: {
 					   "Access-Control-Allow-Origin": "*",
 					   'Access-Control-Allow-Methods': 'GET', 

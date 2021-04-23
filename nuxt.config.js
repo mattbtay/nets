@@ -42,7 +42,7 @@ export default {
     proxy: true
   },
   proxy: {
-    "/api/": "http://localhost:8888"
+    "/api/": { target: "http://api.example.com", pathRewrite: { "^/api/": "" } }
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}
