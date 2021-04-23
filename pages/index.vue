@@ -7,27 +7,24 @@
 </template>
 
 <script>
+import axios from 'axios'
   export default {
     data() {
       return {
         events: {}
       }
     },
-    async asyncData( {$axios} ){
-      try{
-      const events = await $axios.$get('/api/getEvents/', {
+    mounted (){
+      axios.get('/api/getEvents/', {
 				  headers: {
 					   "Access-Control-Allow-Origin": "*",
 					   'Access-Control-Allow-Methods': 'GET', 
 				  }
-			  })
-      return {events}
-    } catch(error){
-      console.log(error)
-    }
-    }
+			  }).then(res => {
+          this.events = res.data
+        })
     
-  }
+  }}
 </script>
 
 <style lang="scss" scoped>
