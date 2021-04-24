@@ -16,34 +16,36 @@ oAuth2Client.setCredentials({
 
 const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
 
-const handler = async event => {
-  try {
-    var that = this;
-    console.log("hi matt");
-    calendar.events.list(
-      {
-        auth: oAuth2Client,
-        calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com"
-      },
-      (error, response) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        const events = response.data.items;
-      }
-    );
 
-    return {
+
+const handler = function( event, context, callback ){
+
+  var datalist = []
+
+calendar.events.list(
+  {
+    auth: oAuth2Client,
+    calendarId:
+      "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com"
+  },
+  (error, response) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+    datalist =  response.data.items;
+    callback(null,  {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
       statusCode: 200,
-      body: JSON.stringify(events)
-      // // more keys you can return:
-      // headers: { "headerName": "headerValue", ... },
-      // isBase64Encoded: true,
-    };
-  } catch (error) {
-    return { statusCode: 500, body: error.toString() };
+      body: JSON.stringify(datalist)
+    })
   }
+  
+)
+  
+
 };
 
 module.exports = { handler };
