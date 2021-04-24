@@ -29,19 +29,20 @@ calendar.events.list(
       "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com"
   },
   (error, response) => {
-    if (error) {
-      console.log(error);
-      return;
-    }
-    datalist =  response.data.items;
-    callback(null,  {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
-      statusCode: 200,
-      body: JSON.stringify(datalist)
-    })
-  }
+                         if (error) {
+                           console.log(error);
+                           return;
+                         }
+                         datalist = response.data.items;
+                         // need to filter the items for only today TODO
+                         callback(null, {
+                           headers: {
+                             "Access-Control-Allow-Origin": "*"
+                           },
+                           statusCode: 200,
+                           body: JSON.stringify(datalist)
+                         });
+                       }
   
 )
   
