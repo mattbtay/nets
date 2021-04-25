@@ -30,7 +30,7 @@ calendar.events.list(
       "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com"
   },
   (error, response) => {
-    var compareDesc = require("date-fns/compareDesc");
+    var isToday = require("date-fns/isToday");
                          if (error) {
                            console.log(error);
                            return;
@@ -39,10 +39,9 @@ calendar.events.list(
                          // need to filter the items for only today TODO
                          const netsToday = datalist.filter(
                            net =>
-                             compareDesc(
-                               new Date(),
+                             isToday(
                                new Date(net.start.dateTime)
-                             ) === 1
+                             )
                          );
                          callback(null, {
                            headers: {

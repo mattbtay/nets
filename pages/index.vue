@@ -30,8 +30,8 @@
             <td>{{getDate(event.start.dateTime)}}</td>
             <td>{{event.summary}}</td>
             <td>{{makeColumn(formatContent(event.description), 0)}}</td>
-            <td>{{makeColumn(formatContent(event.description), 2)}}</td>
-            <td v-html="makeColumn(formatContent(event.description), 3)"></td>
+            <td>{{makeColumn(formatContent(event.description), 1)}}</td>
+            <td v-html="makeColumn(formatContent(event.description), 2)"></td>
 
           </tr>
         </tbody>
@@ -96,7 +96,7 @@ import {format, isPast} from 'date-fns'
       return format(new Date(time), "HH:MM")
     },
     formatContent: function(content){
-      // section breakdown FQ | Net Control | Description | org | link to org
+      // section breakdown FQ | Description | org | link to org
       return content.split(" | ");
     },
     makeColumn: function(data, index){
