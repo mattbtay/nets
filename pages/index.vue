@@ -3,14 +3,40 @@
   <b-container>
     <b-row>
       <b-col>
-        <b-jumbotron header="BootstrapVue" lead="Bootstrap v4 Components for Vue.js 2">
-    <p>For more information visit website</p>
-    <b-button variant="primary" href="#">More Info</b-button>
-  </b-jumbotron>
+        <div class="pb-2">
+        <h1 class="text-center pb-2 pt-5 px-5">Are there any nets today?</h1>
+        <h1 v-if="events.length > 0" class="text-center pb-2 mainText" style="font-size:8rem">YES!</h1>
+        <h1 v-if="events.length == 0" class="text-center pb-2 mainText sad" style="font-size:8rem">Nope</h1>
+        <!-- <p class="text-center pb-5">If you have a net you would like to submit, please let us know.</p> -->
+        </div>
+      </b-col>
+    </b-row>
+    <b-row v-if="!events">
+      <b-col>
+        loading...
       </b-col>
     </b-row>
     <b-row>
-      <b-col  v-for="(event, index) in events" :key="index">
+      <table v-if="events" class="table table-striped">
+        <thead class="thead-dark">
+          <th>Time</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Description</th>
+          <th>Organization</th>
+        </thead>
+        <tbody>
+          <tr v-for="(event, index) in events" :key="index">
+            <td>{{getDate(event.start.dateTime)}}</td>
+            <td>{{event.summary}}</td>
+            <td>{{makeColumn(formatContent(event.description), 0)}}</td>
+            <td>{{makeColumn(formatContent(event.description), 2)}}</td>
+            <td v-html="makeColumn(formatContent(event.description), 3)"></td>
+
+          </tr>
+        </tbody>
+      </table>
+      <!-- <b-col v-for="(event, index) in events" :key="index">
       <b-card
     :title="event.summary"
     img-src="https://picsum.photos/600/300/?image=25"
@@ -30,7 +56,7 @@
     </div>
 
   </b-card>
-      </b-col>
+      </b-col> -->
     </b-row>
   </b-container>
 
@@ -69,16 +95,12 @@ import {format, isPast} from 'date-fns'
     getDate: function(time){
       return format(new Date(time), "HH:MM")
     },
-    formatContent: function(content, time){
+    formatContent: function(content){
       // section breakdown FQ | Net Control | Description | org | link to org
-      var sections = content.split(" | ");
-      return `<address>
-      Time: ${time}<br>
-      Location:  ${sections[0]}<br>
-              Net Control: ${sections[1]}<br>
-              Organizer: ${sections[3]}</br>
-              ${sections[2] ? sections[2] : ''}</address>
-              `
+      return content.split(" | ");
+    },
+    makeColumn: function(data, index){
+      return data[index]
     },
     isPastTime: function(date){
       return isPast(new Date(date))
@@ -89,6 +111,14 @@ import {format, isPast} from 'date-fns'
 </script>
 
 <style scoped>
+
+.mainText {
+  color:#3D8EB9;
+}
+
+.mainText.sad {
+  color:#CF000F;
+}
 
 .card {
   position: relative;
