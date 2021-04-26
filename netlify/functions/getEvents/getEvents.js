@@ -23,31 +23,39 @@ const handler = function( event, context, callback ){
 
   var datalist = []
 
+  var start = new Date();
+  start.setHours(0, 0, 0, 0);
+
+  var end = new Date();
+  end.setHours(23, 59, 59, 999);
+
 calendar.events.list(
   {
     auth: oAuth2Client,
     calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-    singleEvents: false
+    singleEvents: true,
+    timeMin: start,
+    timeMax: end
   },
   (error, response) => {
-    var isToday = require("date-fns/isToday");
-    if (error) {
-      console.log(error);
-      return;
-    }
-    datalist = response.data.items;
-    // need to filter the items for only today TODO
-    const netsToday = datalist.filter(net =>
-      isToday(new Date(net.start.dateTime))
-    );
-    callback(null, {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
-      statusCode: 200,
-      body: JSON.stringify(netsToday)
-    });
-  }
+                         var isToday = require("date-fns/isToday");
+                         if (error) {
+                           console.log(error);
+                           return;
+                         }
+                         datalist = response.data.items;
+                         // need to filter the items for only today TODO
+                         // const netsToday = datalist.filter(net =>
+                         //   isToday(new Date(net.start.dateTime))
+                         // );
+                         callback(null, {
+                           headers: {
+                             "Access-Control-Allow-Origin": "*"
+                           },
+                           statusCode: 200,
+                           body: JSON.stringify(datalist)
+                         });
+                       }
 );
   
 
