@@ -17,7 +17,7 @@
       </b-col>
     </b-row>
     <b-row v-if="eventStatus == 2">
-      <b-table head-variant="dark" stacked="sm" responsive="true" sort-by="start.dateTime" striped :items="events" :fields="fields">
+      <b-table head-variant="dark" stacked="sm" responsive="true" striped :items="events" :fields="fields">
 
         <template #cell(start)="data">
           {{getDate(data.value.dateTime)}}

@@ -21,10 +21,8 @@ const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
 
 const handler = function( event, context, callback ){
 
-  var datalist = []
-
   var start = new Date();
-  start.setHours(0, 0, 0, 0);
+  start.setHours(0, 0, 1, 0);
 
   var end = new Date();
   end.setHours(23, 59, 59, 999);
@@ -33,29 +31,25 @@ calendar.events.list(
   {
     auth: oAuth2Client,
     calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-    singleEvents: true,
+    singleEvents: false,
     timeMin: start,
-    timeMax: end
+    timeMax: end,
+    timeZone: 'central'
+    // orderBy: 'startTime'
   },
   (error, response) => {
-                         var isToday = require("date-fns/isToday");
-                         if (error) {
-                           console.log(error);
-                           return;
-                         }
-                         datalist = response.data.items;
-                         // need to filter the items for only today TODO
-                         // const netsToday = datalist.filter(net =>
-                         //   isToday(new Date(net.start.dateTime))
-                         // );
-                         callback(null, {
-                           headers: {
-                             "Access-Control-Allow-Origin": "*"
-                           },
-                           statusCode: 200,
-                           body: JSON.stringify(datalist)
-                         });
-                       }
+    if (error) {
+      console.log(error);
+      return;
+    }
+    callback(null, {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      statusCode: 200,
+      body: JSON.stringify(response.data.items)
+    });
+  }
 );
   
 
