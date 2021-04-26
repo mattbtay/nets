@@ -5,58 +5,47 @@
       <b-col>
         <div class="pb-2">
         <h1 class="text-center pb-2 pt-5 px-5">Are there any nets today?</h1>
-        <h1 v-if="events.length > 0" class="text-center pb-2 mainText" style="font-size:8rem">YES!</h1>
-        <h1 v-if="events.length == 0" class="text-center pb-2 mainText sad" style="font-size:8rem">Nope</h1>
+        <h1 v-if="eventStatus == 2" class="text-center pb-2 mainText" style="font-size:8rem">YES!</h1>
+        <h1 v-if="eventStatus == 1" class="text-center pb-2 mainText sad" style="font-size:8rem">Nope</h1>
         <!-- <p class="text-center pb-5">If you have a net you would like to submit, please let us know.</p> -->
         </div>
       </b-col>
     </b-row>
-    <b-row v-if="!events">
+    <b-row v-if="eventStatus == 0">
       <b-col>
-        loading...
+        <h2 class="text-center text-primary">loading...</h2>
       </b-col>
     </b-row>
-    <b-row>
-      <table v-if="events" class="table table-striped">
-        <thead class="thead-dark">
-          <th>Time</th>
-          <th>Name</th>
-          <th>Location</th>
-          <th>Description</th>
-          <th>Organization</th>
-        </thead>
-        <tbody>
-          <tr v-for="(event, index) in events" :key="index">
-            <td>{{getDate(event.start.dateTime)}}</td>
-            <td>{{event.summary}}</td>
-            <td>{{makeColumn(formatContent(event.description), 0)}}</td>
-            <td>{{makeColumn(formatContent(event.description), 1)}}</td>
-            <td v-html="makeColumn(formatContent(event.description), 2)"></td>
+    <b-row v-if="eventStatus == 2">
+      <b-table head-variant="dark" stacked="sm" responsive="true" sort-by="start.dateTime" striped :items="events" :fields="fields">
 
-          </tr>
-        </tbody>
-      </table>
-      <!-- <b-col v-for="(event, index) in events" :key="index">
-      <b-card
-    :title="event.summary"
-    img-src="https://picsum.photos/600/300/?image=25"
-    img-alt="Image"
-    img-top
-    tag="article"
-    style="max-width: 20rem;"
-    class="mb-2"
-    v-bind:class="[isPastTime(event.start.dateTime) ? 'disabled' : '']"
-  >
-    <b-card-text>
-      <div v-html="formatContent(event.description, getDate(event.start.dateTime))"></div>
-    </b-card-text>
+        <template #cell(start)="data">
+          {{getDate(data.value.dateTime)}}
+        </template>
 
-    <div class="finished" v-if="isPastTime(event.end.dateTime)">
-      <div>Shoot! Ya missed it!</div>
-    </div>
+        <template #cell(location)="data">
+          {{getDate(data.value)}}
+        </template>
 
-  </b-card>
-      </b-col> -->
+        <!-- A virtual composite column -->
+      <template #cell(loc)="data">
+        {{ makeColumn(formatContent(data.item.description), 0) }}
+      </template>
+
+      <!-- A virtual composite column -->
+      <template #cell(desc)="data">
+        {{ makeColumn(formatContent(data.item.description), 1) }}
+      </template>
+
+      <!-- A virtual composite column -->
+      <template #cell(org)="data">
+        <div v-html="makeColumn(formatContent(data.item.description), 2)" />
+      </template>
+
+
+      </b-table>
+            
+      
     </b-row>
   </b-container>
 
@@ -68,7 +57,15 @@ import {format, isPast} from 'date-fns'
   export default {
     data() {
       return {
-        events: {}
+        eventStatus: 0, // 0 = loading, 1 = no events, 2 = some events
+        fields: [
+          {key: 'start', label: 'Time'},
+          {key: 'summary', label: 'Name'},
+          {key: 'loc', label: 'Location'},
+          {key: 'desc', label: 'Description'},
+          {key: 'org', lable: 'Org.'}
+        ],
+        events: []
       }
     },
     mounted (){
@@ -79,33 +76,42 @@ import {format, isPast} from 'date-fns'
 					   'Access-Control-Allow-Methods': 'GET', 
 				  }
 			  }).then(res => {
+          //debugger;
           this.events = res.data
+          if(res.data.length > 0) {
+            this.eventStatus = 2
+          } else if (res.data.length = 0) {
+            this.eventStatus = 1
+          } else {
+            this.eventStatus = 0
+          }
         })
       } catch(error){
         if(error) console.log(error)
       } 
   },
-  computed: {
-    filteredEventsByToday: function(){
-      // debugger;
-      // return this.events.filter(event => !isToday(event))
-    }
-  },
   methods: {
-    getDate: function(time){
-      return format(new Date(time), "HH:MM")
+    getDate: function(date){
+      var dateF = new Date(date);
+      var hours = dateF.getHours();
+      var minutes = dateF.getMinutes();
+      if(minutes == "0") minutes = '00';
+      var strTime = hours + ':' + minutes
+      //debugger
+      return strTime;
     },
     formatContent: function(content){
       // section breakdown FQ | Description | org | link to org
       return content.split(" | ");
     },
     makeColumn: function(data, index){
+      //debugger;
       return data[index]
     },
     isPastTime: function(date){
       return isPast(new Date(date))
     }
-  }
+  },
   
   }
 </script>

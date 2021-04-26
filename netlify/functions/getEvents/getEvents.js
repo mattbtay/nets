@@ -26,33 +26,29 @@ const handler = function( event, context, callback ){
 calendar.events.list(
   {
     auth: oAuth2Client,
-    calendarId:
-      "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com"
+    calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
+  
   },
   (error, response) => {
     var isToday = require("date-fns/isToday");
-                         if (error) {
-                           console.log(error);
-                           return;
-                         }
-                         datalist = response.data.items;
-                         // need to filter the items for only today TODO
-                         const netsToday = datalist.filter(
-                           net =>
-                             isToday(
-                               new Date(net.start.dateTime)
-                             )
-                         );
-                         callback(null, {
-                           headers: {
-                             "Access-Control-Allow-Origin": "*"
-                           },
-                           statusCode: 200,
-                           body: JSON.stringify(netsToday)
-                         });
-                       }
-  
-)
+    if (error) {
+      console.log(error);
+      return;
+    }
+    datalist = response.data.items;
+    // need to filter the items for only today TODO
+    const netsToday = datalist.filter(net =>
+      isToday(new Date(net.start.dateTime))
+    );
+    callback(null, {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      statusCode: 200,
+      body: JSON.stringify(netsToday)
+    });
+  }
+);
   
 
 };
