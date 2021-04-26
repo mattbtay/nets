@@ -19,40 +19,36 @@ const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
 
 
 
-const handler = function( event, context, callback ){
-
+const handler = function(event, context, callback) {
   var start = new Date();
   start.setHours(0, 0, 1, 0);
 
-  var end = new Date();
-  end.setHours(23, 59, 59, 999);
+  const tomorrow = new Date(start);;
+  tomorrow.setDate(tomorrow.getDate() + 1);;
 
-calendar.events.list(
-  {
-    auth: oAuth2Client,
-    calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-    singleEvents: false,
-    timeMin: start,
-    timeMax: end,
-    timeZone: 'central'
-    // orderBy: 'startTime'
-  },
-  (error, response) => {
-    if (error) {
-      console.log(error);
-      return;
+  calendar.events.list(
+    {
+      auth: oAuth2Client,
+      calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
+      singleEvents: false,
+      timeMin: start,
+      timeMax: tomorrow
+      // orderBy: 'startTime'
+    },
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      callback(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        },
+        statusCode: 200,
+        body: JSON.stringify(response.data.items)
+      });
     }
-    callback(null, {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
-      statusCode: 200,
-      body: JSON.stringify(response.data.items)
-    });
-  }
-);
-  
-
+  );
 };
 
 module.exports = { handler };
