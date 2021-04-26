@@ -27,7 +27,7 @@ calendar.events.list(
   {
     auth: oAuth2Client,
     calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-  
+    singleEvents: false
   },
   (error, response) => {
     var isToday = require("date-fns/isToday");
