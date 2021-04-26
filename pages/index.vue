@@ -17,10 +17,10 @@
       </b-col>
     </b-row>
     <b-row v-if="eventStatus == 2">
-      <b-table head-variant="dark" stacked="sm" responsive="true" striped :items="events" :fields="fields">
-
-        <template #cell(start)="data">
-          {{getDate(data.value.dateTime)}}
+      <b-table head-variant="dark" stacked="sm" responsive="true" sort-by="start.dateTime" striped :items="events" :fields="fields">
+        
+        <template #cell(start)="data" :class="[isPastTime(data.value.dateTime) ? 'past' : '']">
+         {{getDate(data.value.dateTime)}}
         </template>
 
         <template #cell(location)="data">
@@ -39,7 +39,7 @@
 
       <!-- A virtual composite column -->
       <template #cell(org)="data">
-        <div v-html="makeColumn(formatContent(data.item.description), 2)" />
+        <div :class="[isPastTime(data.value.dateTime) ? 'past' : '']" v-html="makeColumn(formatContent(data.item.description), 2)" />
       </template>
 
 
@@ -102,13 +102,15 @@ import {format, isPast} from 'date-fns'
     },
     formatContent: function(content){
       // section breakdown FQ | Description | org | link to org
-      return content.split(" | ");
+      // debugger;
+      return content.split("|");
     },
     makeColumn: function(data, index){
       //debugger;
       return data[index]
     },
     isPastTime: function(date){
+      // debugger
       return isPast(new Date(date))
     }
   },
@@ -149,7 +151,8 @@ import {format, isPast} from 'date-fns'
   box-shadow:2px 2px 4px rgba(0,0,0,.5)
 }
 
-.disabled {
-  
+.past {
+  text-decoration:line-through;
+  text-decoration-color: red;
 }
 </style>

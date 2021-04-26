@@ -24,7 +24,7 @@ const handler = function(event, context, callback) {
   start.setHours(0, 0, 1, 0);
 
   const tomorrow = new Date(start);;
-  tomorrow.setDate(tomorrow.getDate() + 2);
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
   calendar.events.list(
     {
