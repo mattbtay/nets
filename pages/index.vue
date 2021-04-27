@@ -80,7 +80,7 @@ import {format, isPast, getTime} from 'date-fns'
     },
     mounted (){
       try{
-      axios.get('/api/getEvents', {
+      axios.get('/api/getEventList', {
 				  headers: {
 					   "Access-Control-Allow-Origin": "*",
 					   'Access-Control-Allow-Methods': 'GET', 
