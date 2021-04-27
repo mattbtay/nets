@@ -6,14 +6,27 @@
         <div class="pb-2">
         <h1 class="text-center pb-2 pt-5 px-5">Are there any nets today?</h1>
         <h1 v-if="eventStatus == 2" class="text-center pb-2 mainText" style="font-size:8rem">YES!</h1>
+        <h1 v-if="eventStatus == 0" class="text-center pb-2 mainText" style="font-size:8rem">Scanning...</h1>
         <h1 v-if="eventStatus == 1" class="text-center pb-2 mainText sad" style="font-size:8rem">Nope</h1>
         <!-- <p class="text-center pb-5">If you have a net you would like to submit, please let us know.</p> -->
         </div>
       </b-col>
     </b-row>
-    <b-row v-if="eventStatus == 0">
+    <b-row v-if="eventStatus !== 0">
       <b-col>
-        <h2 class="text-center text-primary">loading...</h2>
+        <b-skeleton-table
+        :rows="6"
+        :columns="5"
+        :table-props="{ bordered: true, striped: true, responsive: true }"
+      >
+      <b-thead head-variant="dark">
+        <th>test</th>
+        <th>test</th>
+        <th>test</th>
+        <th>test</th>
+        </b-thead>>
+
+      </b-skeleton-table>
       </b-col>
     </b-row>
     <b-row v-if="eventStatus == 2">
@@ -168,5 +181,6 @@ import {format, isPast, getTime} from 'date-fns'
 .past {
   text-decoration:line-through;
   text-decoration-color: red;
+  opacity:.3
 }
 </style>
