@@ -14,7 +14,12 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "Are there any nets today? See a list of ham radio nets in the dallas/fort worth area each day."
+      }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
@@ -35,7 +40,18 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     "bootstrap-vue/nuxt",
-    "@nuxtjs/axios"
+    "@nuxtjs/axios",
+    "nuxt-social-meta",
+    {
+      url: "http://arethereanynetstoday.com",
+      title: "Are There Any Nets Today",
+      site_name: "Are There Any Nets Today",
+      description: "Are there any nets today? View a list of the current days ham radio nets.",
+      img: "tw-card.png",
+      locale: "en_US",
+      twitter_card: "summary_large_image",
+      themeColor: "#theme-color",
+    },
   ],
 
   axios: {

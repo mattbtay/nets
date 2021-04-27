@@ -47,6 +47,11 @@
             
       
     </b-row>
+    <b-row>
+      <b-col>
+        <p class="text-center">If you have a net you'd like to add, please reach out to <a href="http://qrz.com/db/ki5nda"  target="_blank">KI5NDA</a> on QRZ or on <a href="http://twitter.com/mattbtay" target="_blank">twitter</a></p>
+      </b-col>
+    </b-row>
   </b-container>
 
 </template>
