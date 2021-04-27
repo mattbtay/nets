@@ -24,13 +24,13 @@ const handler = function(event, context, callback) {
   start.setHours(0, 0, 1, 0);
 
   const tomorrow = new Date(start);;
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(23, 23, 23, 999);
 
   calendar.events.list(
     {
       auth: oAuth2Client,
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-      singleEvents: true,
+      singleEvents: false,
       timeMin: start,
       timeMax: tomorrow
       // orderBy: 'startTime'
