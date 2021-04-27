@@ -6,31 +6,22 @@
         <div class="pb-2">
         <h1 class="text-center pb-2 pt-5 px-5">Are there any nets today?</h1>
         <h1 v-if="eventStatus == 2" class="text-center pb-2 mainText" style="font-size:8rem">YES!</h1>
-        <h1 v-if="eventStatus == 0" class="text-center pb-2 mainText" style="font-size:8rem">Scanning...</h1>
+        <h1 v-if="eventStatus == 0" class="text-center pb-2 mainText" style="font-size:8rem">...</h1>
         <h1 v-if="eventStatus == 1" class="text-center pb-2 mainText sad" style="font-size:8rem">Nope</h1>
         <!-- <p class="text-center pb-5">If you have a net you would like to submit, please let us know.</p> -->
         </div>
       </b-col>
     </b-row>
-    <b-row v-if="eventStatus !== 0">
-      <b-col>
-        <b-skeleton-table
-        :rows="6"
-        :columns="5"
-        :table-props="{ bordered: true, striped: true, responsive: true }"
-      >
-      <b-thead head-variant="dark">
-        <th>test</th>
-        <th>test</th>
-        <th>test</th>
-        <th>test</th>
-        </b-thead>>
+    
+    <b-row>
+      <b-table head-variant="dark" stacked="sm" sort-by="start.dateTime" striped :items="events" :fields="fields" :busy="isBusy">
 
-      </b-skeleton-table>
-      </b-col>
-    </b-row>
-    <b-row v-if="eventStatus == 2">
-      <b-table head-variant="dark" stacked="sm" responsive="true" sort-by="start.dateTime" striped :items="events" :fields="fields">
+        <template #table-busy>
+        <div class="text-center text-default my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>Loading...</strong>
+        </div>
+      </template>
         
         <template #cell(start)="data">
          <div :class="[isPastTime(data.value.dateTime) ? 'past' : '']" v-html="getDate(data.value.dateTime)"></div>
@@ -75,6 +66,7 @@ import {format, isPast, getTime} from 'date-fns'
   export default {
     data() {
       return {
+        isBusy: true,
         eventStatus: 0, // 0 = loading, 1 = no events, 2 = some events
         fields: [
           {key: 'start', label: 'Time'},
@@ -96,6 +88,7 @@ import {format, isPast, getTime} from 'date-fns'
 			  }).then(res => {
           //debugger;
           this.events = res.data
+          this.isBusy = false;
           if(res.data.length > 0) {
             this.eventStatus = 2
           } else if (res.data.length = 0) {
