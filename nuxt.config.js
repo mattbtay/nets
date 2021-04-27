@@ -41,19 +41,21 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
-    "nuxt-social-meta",
-    {
-      url: "http://arethereanynetstoday.com",
-      title: "Are There Any Nets Today",
-      site_name: "Are There Any Nets Today",
-      description: "Are there any nets today? View a list of the current days ham radio nets.",
-      img: "tw-card.png",
-      locale: "en_US",
-      twitter_card: "summary_large_image",
-      themeColor: "#theme-color",
-    },
+    "nuxt-social-meta"
   ],
 
+  "nuxt-social-meta": {
+
+    url: "http://arethereanynetstoday.com",
+    title: "Are There Any Nets Today",
+    site_name: "Are There Any Nets Today",
+    description:
+      "Are there any nets today? View a list of the current days ham radio nets.",
+    img: "~tw-card.png",
+    locale: "en_US",
+    twitter_card: "~summary_large_image.png",
+    themeColor: "#theme-color"
+  },
   axios: {
     proxy: true
   },
