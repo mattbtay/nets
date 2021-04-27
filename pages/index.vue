@@ -19,27 +19,27 @@
     <b-row v-if="eventStatus == 2">
       <b-table head-variant="dark" stacked="sm" responsive="true" sort-by="start.dateTime" striped :items="events" :fields="fields">
         
-        <template #cell(start)="data" :class="[isPastTime(data.value.dateTime) ? 'past' : '']">
-         {{getDate(data.value.dateTime)}}
+        <template #cell(start)="data">
+         <div :class="[isPastTime(data.value.dateTime) ? 'past' : '']" v-html="getDate(data.value.dateTime)"></div>
         </template>
 
-        <template #cell(location)="data">
-          {{getDate(data.value)}}
+        <template #cell(freq)="data">
+          <div :class="[isPastTime(data.item.start.dateTime) ? 'past' : '']" v-html="data.item.summary"></div>
         </template>
 
         <!-- A virtual composite column -->
       <template #cell(loc)="data">
-        {{ makeColumn(formatContent(data.item.description), 0) }}
+        <div :class="[isPastTime(data.item.start.dateTime) ? 'past' : '']" v-html="makeColumn(formatContent(data.item.description), 0)"></div>
       </template>
 
       <!-- A virtual composite column -->
       <template #cell(desc)="data">
-        {{ makeColumn(formatContent(data.item.description), 1) }}
+        <div :class="[isPastTime(data.item.start.dateTime) ? 'past' : '']" v-html="makeColumn(formatContent(data.item.description), 1)"></div>
       </template>
 
       <!-- A virtual composite column -->
       <template #cell(org)="data">
-        <div :class="[isPastTime(data.value.dateTime) ? 'past' : '']" v-html="makeColumn(formatContent(data.item.description), 2)" />
+        <div :class="[isPastTime(data.item.start.dateTime) ? 'past' : '']" v-html="makeColumn(formatContent(data.item.description), 2)" />
       </template>
 
 
@@ -58,14 +58,14 @@
 
 <script>
 import axios from 'axios'
-import {format, isPast} from 'date-fns'
+import {format, isPast, getTime} from 'date-fns'
   export default {
     data() {
       return {
         eventStatus: 0, // 0 = loading, 1 = no events, 2 = some events
         fields: [
           {key: 'start', label: 'Time'},
-          {key: 'summary', label: 'Name'},
+          {key: 'freq', label: 'Name'},
           {key: 'loc', label: 'Location'},
           {key: 'desc', label: 'Description'},
           {key: 'org', lable: 'Org.'}
@@ -115,8 +115,17 @@ import {format, isPast} from 'date-fns'
       return data[index]
     },
     isPastTime: function(date){
+      var event = new Date(date);
+      var today = new Date();
+      var eventHour = event.getHours();
+      var eventMin = event.getMinutes();
+      var todayHour = today.getHours();
+      var todayMin = today.getMinutes();
+      var todayTime = todayHour + (todayMin / 60);
+      var eventTime = eventHour + (eventMin / 60);
       // debugger
-      return isPast(new Date(date))
+      // return isPast(new Date(date))
+      return eventTime < todayTime ? true : false
     }
   },
   
