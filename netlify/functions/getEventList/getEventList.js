@@ -1,4 +1,10 @@
-const { google } = require("googleapis");
+
+
+
+
+const handler = function(event, context, callback) {
+
+  const { google } = require("googleapis");
 
 const { OAuth2 } = google.auth;
 
@@ -14,9 +20,8 @@ oAuth2Client.setCredentials({
     "1//04x5_ldyWu-hdCgYIARAAGAQSNwF-L9IrRG6enlngr3yV-Tmn6p3-OGz1TZa5qY8bwQ_ej-DiTrffnmtzp4qOpU0rQrxcUc0jNsE"
 });
 
-const calendar = google.calendar({ version: "v3", auth: api });
+  const calendar = google.calendar({ version: "v3", auth: api });
 
-const handler = function(event, context, callback) {
   var start = new Date();
   start.setHours(0, 0, 1, 0);
 
