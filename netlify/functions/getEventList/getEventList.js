@@ -25,16 +25,15 @@ const handler = function(event, context, callback) {
   start.setHours(0, 0, 1, 0);
 
   const end = new Date();
-  end.setDate(end.getDate() + 1);
   end.setHours(00, 00, 00, 000);
 
   calendar.events.list(
     {
       auth: oAuth2Client,
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-      singleEvents: true,
-      timeMin: start,
-      timeMax: end
+      singleEvents: true
+      // timeMin: start,
+      // timeMax: end
       // orderBy: 'startTime'
     },
     (error, response) => {
