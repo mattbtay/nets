@@ -1,5 +1,3 @@
-// Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
-
 const { google } = require("googleapis");
 
 const { OAuth2 } = google.auth;
@@ -17,8 +15,6 @@ oAuth2Client.setCredentials({
 });
 
 const calendar = google.calendar({ version: "v3", auth: api });
-
-
 
 const handler = function(event, context, callback) {
   var start = new Date();
