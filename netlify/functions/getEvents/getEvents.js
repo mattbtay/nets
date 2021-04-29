@@ -23,8 +23,8 @@ const handler = function(event, context, callback) {
   var start = new Date();
   start.setHours(0, 0, 1, 0);
 
-  const tomorrow = new Date(start);;
-  tomorrow.setDate(tomorrow.getDate() + 1);;
+  const tomorrow = new Date(start);
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
   calendar.events.list(
     {
