@@ -70,6 +70,7 @@ import {format, isPast} from 'date-fns'
     },
     mounted (){
       try{
+      var url = ''
       axios.get('/api/getEvents', {
 				  headers: {
 					   "Access-Control-Allow-Origin": "*",

@@ -30,14 +30,15 @@ const tomorrow = startOfTomorrow();
 const handler = function (event, context, callback) {
   
   
-  calendar.events.list({
+  calendar.events.list(
+    {
       auth: oAuth2Client,
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
       singleEvents: true,
       showDeleted: false,
       timeMin: today.toISOString(),
-      maxResults: 10,
       timeMax: tomorrow.toISOString(),
+      timeZone: 'America/Chicago',
       orderBy: "startTime"
     },
     (error, response) => {
