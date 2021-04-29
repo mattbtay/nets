@@ -102,7 +102,7 @@ import {format, isPast} from 'date-fns'
     },
     formatContent: function(content){
       // section breakdown FQ | Description | org | link to org
-      return content.split(" | ");
+      return content.split("|");
     },
     makeColumn: function(data, index){
       //debugger;
