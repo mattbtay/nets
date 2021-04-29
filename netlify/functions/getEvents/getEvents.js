@@ -52,10 +52,12 @@ const handler = function(event, context, callback) {
     {
       auth: oAuth2Client,
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-      singleEvents: true
-      //timeMin: thedate(start),
+      singleEvents: true,
+      showDeleted: false,
+      timeMin: (new Date()).toISOString(),
+      maxResults: 10,
       //timeMax: thedate(tomorrow)
-      // orderBy: "startTime"
+      orderBy: "startTime"
     },
     (error, response) => {
       if (error) {
