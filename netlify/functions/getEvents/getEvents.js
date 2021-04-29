@@ -30,10 +30,10 @@ const handler = function(event, context, callback) {
     {
       auth: oAuth2Client,
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-      singleEvents: false,
+      singleEvents: true,
       timeMin: start,
-      timeMax: tomorrow
-      // orderBy: 'startTime'
+      timeMax: tomorrow,
+      orderBy: "startTime"
     },
     (error, response) => {
       if (error) {
