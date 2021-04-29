@@ -26,6 +26,8 @@ const handler = function(event, context, callback) {
   const tomorrow = new Date(start);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
+  eventFullList = [];
+
   calendar.events.list(
     {
       auth: oAuth2Client,
@@ -45,7 +47,7 @@ const handler = function(event, context, callback) {
           "Access-Control-Allow-Origin": "*"
         },
         statusCode: 200,
-        body: JSON.stringify(response.data.items)
+        body: JSON.stringify(response.data)
       });
     }
   );

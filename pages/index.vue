@@ -77,8 +77,8 @@ import {format, isPast} from 'date-fns'
 				  }
 			  }).then(res => {
           //debugger;
-          this.events = res.data
-          if(res.data.length > 0) {
+          this.events = res.data.items
+          if(res.data.items.length > 0) {
             this.eventStatus = 2
           } else if (res.data.length = 0) {
             this.eventStatus = 1
