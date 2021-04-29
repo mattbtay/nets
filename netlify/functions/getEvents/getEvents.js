@@ -26,16 +26,36 @@ const handler = function(event, context, callback) {
   const tomorrow = new Date(start);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
+  var thedate = function ISODateString(d) {
+    function pad(n) {
+      return n < 10 ? "0" + n : n;
+    }
+    return (
+      d.getUTCFullYear() +
+      "-" +
+      pad(d.getUTCMonth() + 1) +
+      "-" +
+      pad(d.getUTCDate()) +
+      "T" +
+      pad(d.getUTCHours()) +
+      ":" +
+      pad(d.getUTCMinutes()) +
+      ":" +
+      pad(d.getUTCSeconds()) +
+      "Z"
+    );
+  };
+
   eventFullList = [];
 
   calendar.events.list(
     {
       auth: oAuth2Client,
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-      singleEvents: false,
-      timeMin: start,
-      timeMax: tomorrow
-      // orderBy: 'startTime'
+      singleEvents: true,
+      timeMin: thedate(start),
+      timeMax: thedate(tomorrow),
+      orderBy: "startTime"
     },
     (error, response) => {
       if (error) {
