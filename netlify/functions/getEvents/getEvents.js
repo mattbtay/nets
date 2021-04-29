@@ -10,12 +10,13 @@ const {
 
 const oAuth2Client = new OAuth2(
   "526989770589-2n746t5hf2r30b7taodum5t6tfmh337k.apps.googleusercontent.com",
-  "5OnB48EwOV82XkrhEQNV-od9"
+  "MoaFonse56qJHugijEAHNeMR"
 );
 
 
 oAuth2Client.setCredentials({
-  refresh_token: "1//04x5_ldyWu-hdCgYIARAAGAQSNwF-L9IrRG6enlngr3yV-Tmn6p3-OGz1TZa5qY8bwQ_ej-DiTrffnmtzp4qOpU0rQrxcUc0jNsE"
+  refresh_token:
+    "1//04wmJuQE1-WYqCgYIARAAGAQSNwF-L9Ir7sc-eu8x9gkn4bHm1h4-WkP7Uw8u_atElsgwz51NvAwOFeF5WbyKsLOh0uafYTWdLu8"
 });
 
 const calendar = google.calendar({
@@ -36,9 +37,9 @@ const handler = function (event, context, callback) {
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
       singleEvents: true,
       showDeleted: false,
-      timeMin: today.toISOString(),
-      timeMax: tomorrow.toISOString(),
-      timeZone: 'America/Chicago',
+      timeMin: "2021-04-29T00:00:00.000-05:00",
+      timeMax: "2021-04-30T00:00:00.000-05:00",
+      timeZone: "America/Chicago",
       orderBy: "startTime"
     },
     (error, response) => {
