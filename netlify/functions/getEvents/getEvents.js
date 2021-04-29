@@ -23,9 +23,8 @@ const handler = function(event, context, callback) {
   var start = new Date();
   start.setHours(0, 0, 1, 0);
 
-  const end = new Date();
-  end.setDate(end.getDate() + 1);
-  end.setHours(00, 00, 00, 000);
+  const tomorrow = new Date(start);;
+  tomorrow.setDate(tomorrow.getDate() + 1);;
 
   calendar.events.list(
     {
@@ -33,7 +32,7 @@ const handler = function(event, context, callback) {
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
       singleEvents: false,
       timeMin: start,
-      timeMax: end
+      timeMax: tomorrow
       // orderBy: 'startTime'
     },
     (error, response) => {
