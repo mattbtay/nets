@@ -37,7 +37,10 @@ const handler = function(event, context, callback) {
     (error, response) => {
       if (error) {
         console.log(error);
-        return;
+        return {
+          statusCode: 500,
+          body: JSON.stringify({ error: error })
+        };
       }
       callback(null, {
         headers: {
