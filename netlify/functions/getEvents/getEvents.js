@@ -24,9 +24,15 @@ const calendar = google.calendar({
   auth: oAuth2Client
 });
 
-const {startOfToday, startOfTomorrow} = require('date-fns')
-const today = startOfToday();
-const tomorrow = startOfTomorrow();
+const { format, startOfTomorrow } = require("date-fns");
+
+var date = new Date();
+const today = format(date, "yyyy-MM-dd");
+var isoToday = today + "T00:00:00.000-05:00";
+const tom = startOfTomorrow();
+const tomo = format(tom, "yyyy-MM-dd");
+var isoTom = tomo + "T00:00:00.000-05:00";
+
 
 const handler = function (event, context, callback) {
   
@@ -37,8 +43,8 @@ const handler = function (event, context, callback) {
       calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
       singleEvents: true,
       showDeleted: false,
-      timeMin: "2021-04-29T00:00:00.000-05:00",
-      timeMax: "2021-04-30T00:00:00.000-05:00",
+      timeMin: isoToday,
+      timeMax: isoTom,
       timeZone: "America/Chicago",
       orderBy: "startTime"
     },
