@@ -51,8 +51,8 @@ const handler = function(event, context, callback) {
   calendar.events.list(
     {
       auth: oAuth2Client,
-      calendarId: "8pv1frn7h2ml914el8cu7gb9a0@group.calendar.google.com",
-      singleEvents: true,
+      calendarId: "xxx@group.calendar.google.com",
+      singleEvents: false,
       timeMin: thedate(start),
       timeMax: thedate(tomorrow)
       // orderBy: "startTime"
